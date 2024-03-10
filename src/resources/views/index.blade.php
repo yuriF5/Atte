@@ -10,7 +10,7 @@
 <div class="main">
     <div class="main__inner">
         <div class="main__title">
-            <p class="main__ttl">usernameさんお疲れ様です</p>
+            <p class="main__ttl">{{Auth::user()->name }}さんお疲れ様です</p>
         </div>
         <div class="main__content">
             <div class="main__content__works">
