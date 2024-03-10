@@ -1,0 +1,39 @@
+
+.header__inner {
+    margin: 0 auto;
+    padding: 20px 30px;
+    max-width: 1230px;
+}
+
+.header-utilities {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header__logo {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.header-utilities nav {
+    width: 20%;
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-nav__link {
+    text-decoration: none;
+}
+
+.header-nav__button {
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    cursor: pointer;
+}
