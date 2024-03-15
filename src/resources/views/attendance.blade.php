@@ -6,30 +6,33 @@
 @endsection
 
 @section('content')
+<div class=main>
 
-<div class="text-xl">
-                <div>{{date('Y-m-d')}}</div>
-</div>
+    <div class="text-xl">
+        <div class=date>{{date('Y-m-d')}}</div>
+    </div>
 
-<div class="attendance-table">
-    <table class="attendance-table__inner">
+    <div class="attendance-table">
+        <table class="attendance-table__inner">
+            <tr class="attendance-table__row">
+            <th class="attendance-table__header">名前</th>
+            <th class="attendance-table__header">勤務開始</th>
+            <th class="attendance-table__header">勤務終了</th>
+            <th class="attendance-table__header">休憩時間</th>
+            <th class="attendance-table__header">勤務時間</th>
+        </tr>
         <tr class="attendance-table__row">
-        <th class="attendance-table__header">名前</th>
-        <th class="attendance-table__header">勤務開始</th>
-        <th class="attendance-table__header">勤務終了</th>
-        <th class="attendance-table__header">休憩時間</th>
-        <th class="attendance-table__header">勤務時間</th>
-    </tr>
-    <tr class="attendance-table__row">
-        @foreach($stamps as $stamp)
-        <td class="attendance-table__item">$stamp->name</td>
-        <td class="attendance-table__item">$stamp->punchIn</td>
-        <td class="attendance-table__item">$stamp->punchOut</td>
-        <td class="attendance-table__item">stamp->total_rests</td>
-        <td class="attendance-table__item">gmdate("H:i:s",(strtotime($date.$stamp->end_work)-strtotime($date.$stamp->start_work)))</td>
-        @endforeach
-    </tr>
-    </table>
+            <td class="attendance-table__item">サンプルテキスト</td>
+
+                </td>
+            <td class="attendance-table__item">サンプルテキスト</td>
+            <td class="attendance-table__item">サンプルテキスト</td>
+            <td class="attendance-table__item">サンプルテキスト</td>
+            <td class="attendance-table__item">サンプルテキスト</td>
+        </tr>
+
+        </table>
+</div>
 </div>
 
 <footer class="footer">

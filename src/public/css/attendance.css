@@ -1,13 +1,29 @@
+.main{
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
 
+
+.text-xl{
+    margin: 0px auto;
+    text-align: center;
+}
+.date{
+    margin: 0px auto;
+    text-align: center;
+}
 
 .attendance-table {
-    margin: 30px auto;
+    margin: 0px auto;
     width: 70%;
     text-align: center;
+    justify-content: center;
 }
 
 .attendance-table__inner {
     width: 100%;
+    justify-content: center;
 }
 
 .attendance-table__row {
@@ -23,4 +39,9 @@
 .attendance-table__item {
     padding: 12px;
     width: 20%;
+}
+
+.footer__ttl {
+    margin-top: 150px;
+    text-align: center;
 }

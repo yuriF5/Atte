@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatRestsTable extends Migration
+class CreateWorkTimesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreatRestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('rests', function (Blueprint $table) {
+        Schema::create('work_times', function (Blueprint $table) {
         $table->id();
-        $table->foreignID('work_times_id');
-        $table->string('start')->nullable();
-        $table->datetime('finish')->nullable();
-        $table->integer('total_time')->nullable();
+        $table->foreignID('users_id');
+        $table->datetime('start');
+        $table->datetime('finish');
+        $table->float('total_time')->nullable();
         $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreatRestsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('work_times');
     }
 }

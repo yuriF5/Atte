@@ -5,10 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class rest extends Model
+class Rest_time extends Model
 {
     use HasFactory;
-    protected $guarded = array('id');
-    public static $rules = array(
-        'author_id' => 'required',
+    protected $fillable = ['work_time_id','start','finish','total_time'];
 }
