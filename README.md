@@ -46,9 +46,13 @@ git clone git@github.com:estra-inc/confirmation-test-contact-form.git
 
 
 ## テーブル設計
-
+- 社員
+- 勤怠時間
+- 休憩時間
 
 ## ER 図
+
+![初級模擬](https://github.com/yuriF5/Atte/assets/152612024/8093455f-1840-4281-b051-ebebf9a6cac8)
 
 
 ## Laravel 環境構築
