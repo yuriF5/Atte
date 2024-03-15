@@ -18,6 +18,7 @@ class CreateWorkTimesTable extends Migration
         $table->foreignID('users_id');
         $table->datetime('start');
         $table->datetime('finish');
+        $table->tinyInteger('working_flg')->default(1);
         $table->float('total_time')->nullable();
         $table->timestamps();
         });
