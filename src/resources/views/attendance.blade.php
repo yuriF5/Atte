@@ -22,7 +22,7 @@
             <th class="attendance-table__header">勤務時間</th>
         </tr>
         <tr class="attendance-table__row">
-            <td class="attendance-table__item">サンプルテキスト</td>
+            <td class="attendance-table__item">{{Auth::user()->name }}</td>
 
                 </td>
             <td class="attendance-table__item">サンプルテキスト</td>

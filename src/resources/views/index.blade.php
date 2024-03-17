@@ -14,27 +14,19 @@
         </div>
         <div class="main__content">
             <div class="main__content__works">
-                <form id="worktime-form" method="POST" action="{{ route('worktimeStore') }}">
-          @csrf
-          <div class="form-group row justify-content-center">
-                <div class="col-md-6 d-flex">
-                    <div class="mr-3">
-                        @if(isset($worktime->working_flg) && ($worktime->working_flg === 1 || $worktime->working_flg === 0))
-                            <button id="start-button" type="button" class="btn btn-primary btn-lg" disabled>出勤する</button>
-                        @else
-                            <button id="start-button" type="button" class="btn btn-primary btn-lg">出勤する</button>
-                        @endif
-                        <input id="start_time" type="hidden" name="start_time">
+                <div class="attendance__content">
+                    <div class="attendance__panel">
+                        <form action="{{ route('work_time/start') }}" method="POST">
+                            @csrf
+                        <button class="attendance__button-submit" type="submit">出勤</button>
+                        </form>
+                        <form action="{{ route('work_time/finish') }}" method="POST">
+                            @csrf
+                        <button class="attendance__button-submit" type="submit">退勤</button>
+                        </form>
                     </div>
-                    <div class="mr-3">
-                        @if(isset($worktime->working_flg) && $worktime->working_flg === 1)
-                            <button id="end-button" type="button" class="btn btn-secondary btn-lg">退勤する</button>
-                        @else
-                            <button id="end-button" type="button" class="btn btn-secondary btn-lg" disabled>退勤する</button>
-                        @endif
-                        <input id="end_time" type="hidden" name="end_time">
-                    </div>
-            
+                </div>
+            </div>
             <div class="main__content__bleak">
                 <form class="attendance__button">
                 @csrf
@@ -55,9 +47,9 @@
 </div>
 <script>
     const startButton = document.getElementById('start-button');
-    const endButton = document.getElementById('end-button');
+    const finishButton = document.getElementById('finish-button');
     const startTimeInput = document.getElementById('start_time');
-    const endTimeInput = document.getElementById('end_time');
+    const finishTimeInput = document.getElementById('finish_time');
     const submitButton = document.getElementById('submit-button');
 
     // 出勤ボタンがクリックされたときの処理
@@ -70,11 +62,11 @@
     });
 
     // 退勤ボタンがクリックされたときの処理
-    endButton.addEventListener('click', () => {
+    finishButton.addEventListener('click', () => {
         const now = new Date();
         const endTime = new Date(0, 0, 0, now.getHours(), now.getMinutes());
-        endTimeInput.value = endTime.toLocaleTimeString();
-        endButton.disabled = true;
+        finishTimeInput.value = endTime.toLocaleTimeString();
+        finishButton.disabled = true;
         submitButton.disabled = false;
     });
 

@@ -18,4 +18,8 @@ use App\Http\Controllers\Work_timeController;
 Route::middleware('auth')->group(function () {Route::get('/', [RegisteredUserController::class, 'index']); });
 Route::get('/attendance', [Work_timeController::class, 'attendance']);
 
-Route::post('worktime/store',[WorkController::class,'exeWorktimeStore'])->name('worktimeStore');
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::post('/start', [Work_timeController::class,'start'])->name('timestamp/start');
+    Route::post('/finish', [Work_timeController::class,'finish'])->name('timestamp/finish');
+});

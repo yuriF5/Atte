@@ -18,78 +18,52 @@ class Work_timeController extends Controller
         $user = Auth::user()->name;
         return view('index',compact('user'));
     }
-    public function create() {
+    public function start()
+    {
         $user = Auth::user();
+        $oldWork_time = Work_time::where('user_id', $user->id)->latest()->first();
+        if ($oldWork_time) {
+            $oldWork_timestart = new Carbon($oldWork_time->start);
+            $oldWork_timeDay = $oldTWork_time_start->startOfDay();
+        } else {
+            $work_time = Work_time::create([
+                'user_id' => $user->id,
+                'start' => Carbon::now(),
+            ]);
 
-        $oldStartTime = Work::where('user_id',$user->id)->latest()->first();
+            return redirect()->back()->with('my_status', '出勤打刻が完了しました');
 
-        $oldDay= '';
-
-        if($oldStartTime) {
-            $oldTimePunchIn = new Carbon($oldStartTime->punchIn);
-            $oldDay = $oldTimePunchIn->startOfDay();
         }
-        $today = Carbon::today();
+        
+        $newWork_timeDay = Carbon::today();
 
-        if(($oldDay == $today) && (empty($oldStartTime->punchOut))) {
-            return redirect()->back()->with('message','出勤打刻済みです');
+        /**
+         * 日付を比較する。同日付の出勤打刻で、かつ直前のTimestampの退勤打刻がされていない場合エラーを吐き出す。
+         */
+        if (($oldWork_timeDay == $newWork_timeDay) && (empty($oldWork_time->finish))){
+            return redirect()->back()->with('error', 'すでに出勤打刻がされています');
         }
 
-        if($oldStartTime) {
-            $oldTimePunchOut = new Carbon($oldStartTime->punchOut);
-            $oldDay = $oldTimePunchOut->startOfDay();
-        }
-
-        if(($oldDay == $today)) {
-            return redirect()->back()->with('message','退勤打刻済みです');
-        }
-
-        $time = Work::create([
+        $work_time = Work_time::create([
             'user_id' => $user->id,
-            'start_time' => Carbon::now(),
+            'start' => Carbon::now(),
         ]);
 
-        return redirect()->back();
-
+        return redirect()->back()->with('my_status', '出勤打刻が完了しました');
     }
 
-    public function store(Request $request){
+    public function finish()
+    {
         $user = Auth::user();
-        $finish = Work::where('user_id',$user->id)->latest()->first();
-        $now = new Carbon();
-        $start = new Carbon( $finish->start);
-        $startRestTime = new Carbon( $end_time->startRestTime);
-        $endRestTime = new Carbon( $end_time->endRestTime);
-        $stayTime = $start_time->diffInMinutes($now);
-        $breakTime =  $startRestTime->diffInMinutes($endRestTime);
-        $workingMinute = $stayTime - $breakTime;
-        $workingHour = ceil($workingMinute / 15) * 0.25;
-    
-        if($end_time) {
-            if(empty($end_time->punchOut)) {
-                if($end_time->startRestTime && !$end_time->endRestTime) {
-                    return redirect()->back()->with('message','休憩打刻が押されていません');
-                }else{
-                    $end_time->update([
-                        'end_time' => Carbon::now(),
-                        'work_time' => $workingMinute
-                    ]);
-                    return redirect()->back();
-                }
-            }else{
-                $today = new Carbon();
-                $day = $today->day;
-                $oldPunchOut = new Carbon();
-                $oldPunchOutDay = $oldPunchOut->day;
-                if($day == $oldPunchOutDay) {
-                    return redirect()->back()->with('message','退勤済みです');
-                }else{
-                    return redirect()->back()->with('message','出勤打刻が押されていません');
-                }
-            }
+        $work_time = Work_time::where('user_id', $user->id)->latest()->first();
+
+        if( !empty($work_time->finish)) {
+            return redirect()->back()->with('error', '既に退勤の打刻がされているか、出勤打刻されていません');
         }
-        else{
-            return redirect()->back()->with('message','出勤打刻がされていません');
-        }
+        $work_time->update([
+            'finish' => Carbon::now()
+        ]);
+
+        return redirect()->back()->with('my_status', '退勤打刻が完了しました');
     }
 }
