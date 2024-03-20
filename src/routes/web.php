@@ -20,6 +20,6 @@ Route::get('/attendance', [Work_timeController::class, 'attendance']);
 
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::post('/start', [Work_timeController::class,'start'])->name('timestamp/start');
-    Route::post('/finish', [Work_timeController::class,'finish'])->name('timestamp/finish');
+    Route::post('/start', [Work_timeController::class,'store'])->name('work_time/start');
+    Route::post('/finish', [Work_timeController::class,'store'])->name('work_time/finish');
 });

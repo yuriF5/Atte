@@ -88,3 +88,7 @@ php artisan migrate
 シーディングの実行
 
 php artisan migrate
+
+日時データを保存するためcarbonをインストール
+
+composer require nesbot/carbon

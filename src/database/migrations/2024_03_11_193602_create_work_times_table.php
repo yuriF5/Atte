@@ -15,11 +15,10 @@ class CreateWorkTimesTable extends Migration
     {
         Schema::create('work_times', function (Blueprint $table) {
         $table->id();
-        $table->foreignID('users_id');
-        $table->datetime('start');
-        $table->datetime('finish');
-        $table->tinyInteger('working_flg')->default(1);
-        $table->float('total_time')->nullable();
+        $table->foreignID('user_id')->constrained()->cascadeOnDelate();
+        $table->datetime('start')->nullable();
+        $table->datetime('finish')->nullable()->useCurrent();
+        $table->float('total_time')->nullable()->useCurrent();
         $table->timestamps();
         });
     }

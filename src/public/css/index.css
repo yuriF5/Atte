@@ -9,6 +9,19 @@
     text-align: center;
     margin: 0 auto;
 }
+.attendance__content{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 5px;
+    width: 50%;
+    height: 100px;
+    border: none;
+    border-radius: 3px;
+    background: #575252;
+    color: #000;
+    cursor: pointer;
+}
 
 .attendance__button{
     display: flex;

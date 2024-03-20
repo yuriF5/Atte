@@ -9,10 +9,16 @@ use App\Http\Controllers\Work_timeController;
 class Work_time extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id','start','finish','total_time'];
 
-    public function user()
+    protected $fillable = [
+        'users_id',
+        'start',
+        'finish',
+        'total_time'
+    ];
+
+    public function users()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }

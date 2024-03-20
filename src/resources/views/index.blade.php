@@ -15,23 +15,23 @@
         <div class="main__content">
             <div class="main__content__works">
                 <div class="attendance__content">
-                    <div class="attendance__panel">
-                        <form action="{{ route('work_time/start') }}" method="POST">
-                            @csrf
-                        <button class="attendance__button-submit" type="submit">出勤</button>
-                        </form>
-                        <form action="{{ route('work_time/finish') }}" method="POST">
-                            @csrf
-                        <button class="attendance__button-submit" type="submit">退勤</button>
-                        </form>
-                    </div>
+                    <form action="{{ route('work_time/start') }}" method="POST">
+                        @csrf
+                        <input hidden type="text" name="users_id" value="{{Auth::user()->id}}">
+                        <button class="attendance__button-start" name="start" type="submit">出勤</button>
+                    </form>
+                    <form action="{{ route('work_time/finish') }}" method="POST">
+                        @csrf
+                        <input hidden type="text" name="users_id" value="{{Auth::user()->id}}">
+                        <button class="attendance__button-stop" name="finish "type="submit">退勤</button>
+                    </form>
                 </div>
             </div>
             <div class="main__content__bleak">
                 <form class="attendance__button">
                 @csrf
                 <div class="bleak__button">
-                    <input type="hidden" name="user_id" value="user_id">
+                    <input type="hidden" name="users_id" value="users_id">
                     <button class="attendance__button-start" name="start" value="">休憩開始</button>
                 </div>
             </form>
