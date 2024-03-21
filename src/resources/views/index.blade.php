@@ -17,12 +17,12 @@
                 <div class="attendance__content">
                     <form action="{{ route('work_time/start') }}" method="POST">
                         @csrf
-                        <input hidden type="text" name="users_id" value="{{Auth::user()->id}}">
+                        <input hidden type="text" name="user_id" value="{{Auth::user()->id}}">
                         <button class="attendance__button-start" name="start" type="submit">出勤</button>
                     </form>
                     <form action="{{ route('work_time/finish') }}" method="POST">
                         @csrf
-                        <input hidden type="text" name="users_id" value="{{Auth::user()->id}}">
+                        <input hidden type="text" name="user_id" value="{{Auth::user()->id}}">
                         <button class="attendance__button-stop" name="finish "type="submit">退勤</button>
                     </form>
                 </div>
@@ -31,7 +31,7 @@
                 <form class="attendance__button">
                 @csrf
                 <div class="bleak__button">
-                    <input type="hidden" name="users_id" value="users_id">
+                    <input type="hidden" name="user_id" value="user_id">
                     <button class="attendance__button-start" name="start" value="">休憩開始</button>
                 </div>
             </form>
