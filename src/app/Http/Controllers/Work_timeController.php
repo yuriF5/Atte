@@ -58,15 +58,15 @@ class Work_timeController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $use_id = $request->input('user_id');
-        $work_finish_time=$request->input('finish');
-        Work_time::where('user_id',$user_id)->finish(['finish'=>Carbon::now()]);
+        $user_id = $request->input('user_id');
+        $finish_time=$request->input('finish');
+        Work_time::where('user_id', $user_id)->update(['finish' => Carbon::now()]);
 
         $work_finish_time = Work::where('user_id',$user->id)->latest()->first();
-        $now = new Carbon();
-        $start_time = new Carbon( $finish_time->start_time);
-        $startRestTime = new Carbon( $finish_time->startRestTime);
-        $finishRestTime = new Carbon( $finish_time->finishRestTime);
+        $now = new Carbon();// Carbonインスタンスを生成するときはCarbon::now()を使う
+        $start_time = new Carbon($work_finish_time->start_time);
+        $startRestTime = new Carbon($work_finish_time->startRestTime);
+        $finishRestTime = new Carbon($work_finish_time->finishRestTime);
         $stayTime = $start_time->diffInMinutes($now);
         $restTime =  $startRestTime->diffInMinutes($finishRestTime);
         $workingMinute = $stayTime - $restTime;
