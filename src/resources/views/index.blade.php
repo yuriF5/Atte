@@ -28,19 +28,19 @@
                 </div>
             </div>
             <div class="main__content__bleak">
-                <form class="bleak__button"action="
+                <form class="bleak__button"action="{{ route('rest_time/start') }}
                 " method="POST">
                         @csrf
-                    <input type="hidden" name="user_id" value="
+                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}
                     ">
-                    <button class="attendance__button-start" name="start" >休憩開始</button>
+                    <button class="attendance__button-start" name="r_start" >休憩開始</button>
                 </form>
-                <form class="bleak__button"action="
+                <form class="bleak__button"action="{{ route('rest_time/finish') }}
                 " method="POST">
                         @csrf
-                    <input type="hidden" name="user_id" value="
+                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}
                     ">
-                    <button class="attendance__button-start" name="start" >休憩終了</button>
+                    <button class="attendance__button-finish" name="r_finish" >休憩終了</button>
                 </form>
             </div>
         </div>  

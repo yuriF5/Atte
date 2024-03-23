@@ -10,10 +10,11 @@ use Auth;
 
 class RestController extends Controller
 {
-    public function r_start(Request $request)
+    public function startRest(Request $request)
     {
         $user = Auth::user();
         $rest = Rest_time::where('user_id',$user->id)->latest()->first();
+
         if($rest) {
             $rest->update(['start' => now()]);
         }else{
@@ -26,7 +27,7 @@ class RestController extends Controller
     }
 
     
-    public function r_finish(Request $request)
+    public function finishRest(Request $request)
 {
     $user = Auth::user();
     $rest = Rest_time::where('user_id', $user->id)->latest()->first();
@@ -44,15 +45,14 @@ class RestController extends Controller
             'total_time' => $total_time,
         ]);
     } else {
-        $start = Carbon::now();
+        $startTime = Carbon::now();
         $total_time = 0;
         $finish = Carbon::now();
-        $total_time = $start->diffInMinutes($finish);
+        $total_time = $startTime->diffInMinutes($finish);
         $t_time = Rest_time::create([
             'user_id' => $user->id,
-            'start' => null,
             'finish' => $finish,
-            'total_time' => $t_time,
+            'total_time' => $rest_time,
         ]);
     }
 

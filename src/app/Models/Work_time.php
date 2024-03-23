@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\Work_timeController;
+use Carbon\Carbon;
 
 class Work_time extends Model
 {
@@ -17,8 +18,15 @@ class Work_time extends Model
         'total_time'
     ];
 
+    
+
     public function users()
     {
         return $this->belongsTo(User::class);
+    }
+    
+    public function rest_time()
+    {
+        return $this->hasMany(Rest_time::class);
     }
 }
