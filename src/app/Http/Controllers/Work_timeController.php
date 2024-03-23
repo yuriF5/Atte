@@ -62,7 +62,7 @@ class Work_timeController extends Controller
         $finish_time=$request->input('finish');
         Work_time::where('user_id', $user_id)->update(['finish' => Carbon::now()]);
 
-        $work_finish_time = Work::where('user_id',$user->id)->latest()->first();
+        $work_finish_time = Work_time::where('user_id',$user->id)->latest()->first();
         $now = new Carbon();// Carbonインスタンスを生成するときはCarbon::now()を使う
         $start_time = new Carbon($work_finish_time->start_time);
         $startRestTime = new Carbon($work_finish_time->startRestTime);

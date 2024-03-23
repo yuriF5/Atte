@@ -89,6 +89,6 @@ php artisan migrate
 
 php artisan migrate
 
-日時データを保存するためcarbonをインストール
+退勤時間を保存する為carbonをインストール
 
 composer require nesbot/carbon
