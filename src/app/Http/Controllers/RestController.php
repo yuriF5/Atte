@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Rest_time;
-use App\Http\Requests\RestRequest;
 use Carbon\Carbon;
 use Auth;
 

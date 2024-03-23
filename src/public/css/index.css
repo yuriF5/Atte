@@ -9,6 +9,13 @@
     text-align: center;
     margin: 0 auto;
 }
+
+.alert{
+    max-width: 800px;
+        text-align: center;
+        margin: 0 auto;
+}
+
 .attendance__content{
     display: flex;
     justify-content: space-between;
