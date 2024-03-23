@@ -28,19 +28,20 @@
                 </div>
             </div>
             <div class="main__content__bleak">
-                <form class="attendance__button">
-                @csrf
-                <div class="bleak__button">
-                    <input type="hidden" name="user_id" value="user_id">
-                    <button class="attendance__button-start" name="start" value="">休憩開始</button>
-                </div>
-            </form>
-            <form class="attendance__button" >
-                @csrf
-                <div class="bleak__button">
-                    <input type="hidden" name="user_id" value="user_id">
-                    <button class="attendance__button-stop">休憩終了</button>
-                </div>
+                <form class="bleak__button"action="
+                " method="POST">
+                        @csrf
+                    <input type="hidden" name="user_id" value="
+                    ">
+                    <button class="attendance__button-start" name="start" >休憩開始</button>
+                </form>
+                <form class="bleak__button"action="
+                " method="POST">
+                        @csrf
+                    <input type="hidden" name="user_id" value="
+                    ">
+                    <button class="attendance__button-start" name="start" >休憩終了</button>
+                </form>
             </div>
         </div>  
     </div>

@@ -8,5 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Rest_time extends Model
 {
     use HasFactory;
-    protected $fillable = ['work_time_id','start','finish','total_time'];
+    protected $fillable = 
+    [
+    'work_time_id',
+    'start',
+    'finish',
+    'total_time'
+    ];
+
+
 }

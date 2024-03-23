@@ -23,6 +23,7 @@ class Work_timeController extends Controller
 
     public function create(Request $request)
     {
+        
         $user = Auth::user();
         $user_id = $request->input('user_id');
         $oldStartTime = Work_time::where('user_id',$user->id)->latest()->first();
@@ -54,7 +55,7 @@ class Work_timeController extends Controller
         return redirect('/');
     }
 
-    public function finish(Request $request)
+    public function store(Request $request)
     {
         $user = Auth::user();
         $use_id = $request->input('user_id');
