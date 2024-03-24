@@ -12,6 +12,8 @@
 
 .alert{
     max-width: 800px;
+        color: maroon;
+        font-weight: bold;
         text-align: center;
         margin: 0 auto;
 }
