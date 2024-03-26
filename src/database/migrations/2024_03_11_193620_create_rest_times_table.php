@@ -15,10 +15,10 @@ class CreateRestTimesTable extends Migration
     {
         Schema::create('rest_times', function (Blueprint $table) {
         $table->id();
-        $table->foreignID('work_time_id')->constrained()->cascadeOnDelate();
+        $table->foreignID('work_time_id')->nullable()->constrained()->cascadeOnDelate();
         $table->string('start')->nullable();
         $table->datetime('finish')->nullable()->useCurrent();
-        $table->float('total_time')->nullable()->useCurrent();
+        $table->float('total_time')->nullable();
         $table->timestamps();
         });
     }

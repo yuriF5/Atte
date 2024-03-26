@@ -19,7 +19,7 @@ class Rest_time extends Model
     'total_time'
     ];
 
-    public function work_times()
+    public function work_time()
     {
         return $this->belongsTo(work_time::class);
     }

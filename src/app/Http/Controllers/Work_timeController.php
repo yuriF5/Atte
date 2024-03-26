@@ -18,9 +18,16 @@ class Work_timeController extends Controller
     
     public function index()
     {
-        $user = Auth::user()->name;
-        return view('index',compact('user'));
-    }
+    $user = Auth::user()->name;
+    $current_date = $request->input('date', date('Y-m-d'));
+    $prev_date = date('Y-m-d', strtotime('-1 day', strtotime($current_date)));
+    $next_date = date('Y-m-d', strtotime('+1 day', strtotime($current_date)));
+
+    $work_times = WorkTime::paginate(5);
+    $rest_times = RestTime::all();
+    
+    return view('attendance', compact('user', 'work_times', 'rest_times', 'current_date', 'prev_date', 'next_date'));
+}
 
     public function create(Request $request)
     {
@@ -178,7 +185,7 @@ class Work_timeController extends Controller
                 $oldRestFinish = new Carbon($rest_finish_time->finish);
                 $oldRestFinishDay = $oldRestFinish->day;
                 if ($day == $oldRestFinishDay) {
-                    return redirect()->back()->with('message', '退勤済みです');
+                    return redirect()->back();
                 } else {
                     return redirect()->back()->with('message', '休憩開始打刻が押されていません');
                 }

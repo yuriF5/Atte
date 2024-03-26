@@ -19,16 +19,16 @@
         </div>
         <div class="main__content">
             <div class="main__content__works">
-                    <form class="attendance__content" action="{{ route('work_time/start') }}" method="POST">
-                        @csrf
-                        <input hidden type="text" name="user_id" value="{{Auth::user()->id}}">
-                        <button class="attendance__button-start" name="start" type="submit">出勤</button>
-                    </form>
-                    <form class="attendance__content" action="{{ route('work_time/finish') }}" method="POST">
-                        @csrf
-                        <input hidden type="text" name="user_id" value="{{Auth::user()->id}}">
-                        <button class="attendance__button-stop" name="finish "type="submit">退勤</button>
-                    </form>
+                <form class="attendance__content" action="{{ route('work_time/start') }}" method="POST">
+                    @csrf
+                    <input hidden type="text" name="user_id" value="{{Auth::user()->id}}">
+                    <button class="attendance__button-start" name="start" type="submit">出勤</button>
+                </form>
+                <form class="attendance__content" action="{{ route('work_time/finish') }}" method="POST">
+                    @csrf
+                    <input hidden type="text" name="user_id" value="{{Auth::user()->id}}">
+                    <button class="attendance__button-stop" name="finish "type="submit" >退勤</button>
+                </form>
             </div>
             <div class="main__content__bleak">
                 <form class="attendance__content"action="{{ route('rest_time/start') }}
@@ -43,27 +43,13 @@
                         @csrf
                     <input type="hidden" name="user_id" value="{{Auth::user()->id}}
                     ">
-                    <button class="attendance__button-stop" name="finishRest" >休憩終了</button>
+                    <button class="attendance__button-stop" name="finishRest">休憩終了</button>
                 </form>
             </div>
         </div>  
     </div>
 </div>
-<script>
-    const startButton = document.getElementById('start-button');
-    const finishButton = document.getElementById('finish-button');
-    const startTimeInput = document.getElementById('start_time');
-    const finishTimeInput = document.getElementById('finish_time');
-    const submitButton = document.getElementById('submit-button');
 
-    // 出勤ボタンがクリックされたときの処理
-    startButton.addEventListener('click', () => {
-        const now = new Date();
-        const startTime = new Date(0, 0, 0, now.getHours(), now.getMinutes());
-        startTimeInput.value = startTime.toLocaleTimeString();
-        startButton.disabled = true;
-        submitButton.disabled = false;
-    });
 
 
 <footer class="footer">
