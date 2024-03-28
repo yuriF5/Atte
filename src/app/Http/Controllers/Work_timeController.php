@@ -106,6 +106,7 @@ class Work_timeController extends Controller
         public function startRest(Request $request)
     {
         $user = Auth::user();
+        $work_time_id = $request->input('work_time_id');
         $workTimes = Work_Time::whereNull('finish')->where('user_id', Auth()->user()->id)->get();
         $oldStartTime = Rest_time::where('work_time_id',$work_time_id)->latest()->first();
         $oldDay= '';
@@ -125,31 +126,11 @@ class Work_timeController extends Controller
             $oldFinish = new Carbon($oldStartTime->finish);
             $oldDay = $oldFinish->startOfDay();
         }
-
-        if(($oldDay == $today)) {
-            return redirect()->back()->with('message','休憩終了打刻済みです');
-        }
-        if ($workTime) {
-        // 外部テーブルから取得したwork_time_idを使用して新しい休憩時間を作成
-        $rest = new Rest();
-        $rest->work_time_id = $workTime->id;
-        $rest->start_time = now();
-        $rest->save();
-
+    
         // 休憩が開始されたことを示すメッセージをセッションに追加
-        session()->flash('success', '休憩が開始されました。');
-
-        // リダイレクトなど、適切な処理を追加
-        return redirect()->route('some_route_name');
-    } else {
-        // 適切なwork_time_idが見つからない場合の処理
-        // 例えばエラーメッセージをセッションに追加してビューにリダイレクトする
-        session()->flash('error', 'まだ退勤していない作業時間が見つかりませんでした。');
-        return redirect('/'); 
-    }
+        session()->flash('message', '休憩が開始されました。');
 
         Rest_time::create([
-            'work_time_id' => $work_time_id, 
             'start' => Carbon::now(),
         ]);
         return redirect('/');

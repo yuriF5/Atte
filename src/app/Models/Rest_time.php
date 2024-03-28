@@ -21,6 +21,6 @@ class Rest_time extends Model
 
     public function work_time()
     {
-        return $this->belongsTo(work_time::class);
+        return $this->belongsTo(Work_time::class);
     }
 }
