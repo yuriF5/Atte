@@ -22,12 +22,12 @@
                 <form class="attendance__content" action="{{ route('work_time/start') }}" method="POST">
                     @csrf
                     <input hidden type="text" name="user_id" value="{{Auth::user()->id}}">
-                    <button class="attendance__button-start" name="start" type="submit">出勤</button>
+                    <button class="attendance__button-start" name="start" type="submit">勤務開始</button>
                 </form>
                 <form class="attendance__content" action="{{ route('work_time/finish') }}" method="POST">
                     @csrf
                     <input hidden type="text" name="user_id" value="{{Auth::user()->id}}">
-                    <button class="attendance__button-stop" name="finish "type="submit" >退勤</button>
+                    <button class="attendance__button-stop" name="finish "type="submit" >勤務終了</button>
                 </form>
             </div>
             <div class="main__content__bleak">
