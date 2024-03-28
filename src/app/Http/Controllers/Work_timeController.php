@@ -12,8 +12,12 @@ use Auth;
 class Work_timeController extends Controller
 {
     public function attendance()
-    {$currentDate = date('Y-m-d');
-        return view('attendance', compact('currentDate'));
+    {
+        $workTimes = Work_time::with('user')
+                    ->select('user_id', 'start', 'finish')
+                    ->withSum('rest_times', 'total_time')
+                    ->paginate(5);
+    return view('attendance', compact('workTimes'));
     }
     
     public function create(Request $request)
@@ -200,19 +204,5 @@ class Work_timeController extends Controller
         }
     }
     
-    public function changeDate(Request $request)
-    {
-        // ボタンがクリックされたときの処理
-        $currentDate = $request->input('currentDate');
-
-        // ボタンによって日付を変更
-        if ($request->input('direction') === 'prev') {
-            $currentDate = date('Y-m-d', strtotime($currentDate . ' -1 day'));
-        } elseif ($request->input('direction') === 'next') {
-            $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
-        }
-
-        // 日付を表示
-        return view('attendance', compact('currentDate'));
-    }
+    
 }

@@ -22,11 +22,11 @@ class Work_time extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
     }
     
     public function rest_time()
     {
-        return $this->hasMany(Rest_time::class);
+        return $this->hasMany(Rest_time::class,'work_time_id');
     }
 }

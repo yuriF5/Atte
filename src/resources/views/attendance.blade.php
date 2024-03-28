@@ -25,30 +25,15 @@
             </tr>
             @foreach($work_times?? [] as $work_time)
             <tr class="attendance-table__row">
-                <td class="attendance-table__item">{{ $work_time->user->name }}</td>
-                <td class="attendance-table__item">{{ Carbon\Carbon::parse($work_time->start)->format('Y-m-d H:i:s') }}</td>
-                @if (is_null($work_time->finish))
-                <td class="attendance-table__item">(就業中)</td>
-                @else
-                <td class="attendance-table__item">{{ Carbon\Carbon::parse($work_time->finish)->format('Y-m-d H:i:s') }}</td>
-                @endif
-
-                <?php $found_rest_time = false; ?>
-                @foreach($rest_times?? [] as $rest_time)
-                    @if ($rest_time->work_time_id == $work_time->id)
-                        <?php $found_rest_time = true; ?>
-                        <td class="attendance-table__item">{{ Carbon\Carbon::parse($rest_time->finish)->format('Y-m-d H:i:s') }}</td>
-                        <td class="attendance-table__item">{{ $rest_time->total_time }}</td>
-                    @endif
-                @endforeach
-
-                @if (!$found_rest_time)
-                    <td class="attendance-table__item">-</td>
-                    <td class="attendance-table__item">-</td>
-                @endif
+                <td class="attendance-table__item">{{ $workTime->user->name }}</td>
+                <td class="attendance-table__item">{{ $workTime->start }}</td>
+                <td class="attendance-table__item">{{ $workTime->finish }}</td>
+                <td class="attendance-table__item">{{ $workTime->rest_times_sum_total_time }}</td>
+                <td class="attendance-table__item">{{ $workTime->total }}</td>
             </tr>
             @endforeach
         </table>
+        {{ $workTimes->links() }}
     </div>
 
 </div>
