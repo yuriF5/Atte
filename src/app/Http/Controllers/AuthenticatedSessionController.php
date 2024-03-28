@@ -21,7 +21,6 @@ class AuthenticatedSessionController extends Controller
         $hashedPassword = Auth::where('email', $email)->first();
         return view('auth.login');
 
-
         if($hashedPassword && Hash::check($password, $hashedPassword->password)){
         return view('index');
         }else{
