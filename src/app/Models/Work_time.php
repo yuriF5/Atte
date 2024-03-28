@@ -18,7 +18,10 @@ class Work_time extends Model
         'total_time'
     ];
 
-    
+    function findWorkTime($userId) {
+    return WorkTime::whereNull('finish')->where('user_id', $userId)->first();
+
+    }
 
     public function user()
     {

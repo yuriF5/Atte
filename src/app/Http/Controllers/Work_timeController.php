@@ -107,7 +107,6 @@ class Work_timeController extends Controller
     {
         $user = Auth::user();
         $workTimes = Work_Time::whereNull('finish')->where('user_id', Auth()->user()->id)->get();
-
         $oldStartTime = Rest_time::where('work_time_id',$work_time_id)->latest()->first();
         $oldDay= '';
         
