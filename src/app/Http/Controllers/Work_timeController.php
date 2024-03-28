@@ -12,8 +12,8 @@ use Auth;
 class Work_timeController extends Controller
 {
     public function attendance()
-    {
-        return view('attendance');
+    {$currentDate = date('Y-m-d');
+        return view('attendance', compact('currentDate'));
     }
     
     public function index()
@@ -191,5 +191,20 @@ class Work_timeController extends Controller
                 }
             }
         }
+    }
+    public function changeDate(Request $request)
+    {
+        // ボタンがクリックされたときの処理
+        $currentDate = $request->input('currentDate');
+
+        // ボタンによって日付を変更
+        if ($request->input('direction') === 'prev') {
+            $currentDate = date('Y-m-d', strtotime($currentDate . ' -1 day'));
+        } elseif ($request->input('direction') === 'next') {
+            $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
+        }
+
+        // 日付を表示
+        return view('attendance', compact('currentDate'));
     }
 }

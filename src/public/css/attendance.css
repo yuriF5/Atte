@@ -3,15 +3,28 @@
     margin: 0 auto;
     text-align: center;
 }
-
+html,
+body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .text-xl{
     margin: 0px auto;
     text-align: center;
 }
+
+.center {
+    text-align: center;
+}
+
 .date{
     margin: 0px auto;
     text-align: center;
+    display: inline-block;
 }
 
 .attendance-table {

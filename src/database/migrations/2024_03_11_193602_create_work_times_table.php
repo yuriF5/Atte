@@ -17,7 +17,7 @@ class CreateWorkTimesTable extends Migration
         $table->id();
         $table->foreignID('user_id')->constrained()->cascadeOnDelate();
         $table->datetime('start')->nullable();
-        $table->datetime('finish')->nullable()->useCurrent();
+        $table->datetime('finish')->nullable();
         $table->float('total_time')->nullable();
         $table->timestamps();
         });

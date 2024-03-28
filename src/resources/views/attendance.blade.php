@@ -6,29 +6,13 @@
 
 @section('content')
 <div class="main">
-
-    <div class="date">
-        <button onclick="changeDate('prev')">&lt;</button> 
-        {{ date('Y-m-d') }}
-        <button onclick="changeDate('next')">&gt;</button>
-    </div>  
-    
-<script>
-    function changeDate(direction) {
-        var currentDate = new Date('{{ date('Y-m-d') }}');
-        if (direction === 'prev') {
-            currentDate.setDate(currentDate.getDate() - 1); // 1日前に移動
-        } else if (direction === 'next') {
-            currentDate.setDate(currentDate.getDate() + 1); // 1日後に移動
-        }
-        var year = currentDate.getFullYear();
-        var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
-        var day = ('0' + currentDate.getDate()).slice(-2);
-        var formattedDate = year + '-' + month + '-' + day;
-        document.querySelector('.date').innerHTML = formattedDate; // 日付を更新
-        // ここに日付が変更された場合の追加の処理を記述することもできます。
-    }
-</script>
+    <div class="center">
+        <div class="date">
+            <button onclick="changeDate('prev')">&lt;</button> 
+            {{ date('Y-m-d') }}
+            <button onclick="changeDate('next')">&gt;</button>
+        </div>  
+    </div>
 
     <div class="attendance-table">
         <table class="attendance-table__inner">
@@ -66,7 +50,7 @@
             @endforeach
         </table>
     </div>
-    {{ $work_times->links() }} 
+
 </div>
 
 <footer class="footer">
