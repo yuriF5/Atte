@@ -52,7 +52,7 @@ git clone git@github.com:estra-inc/confirmation-test-contact-form.git
 
 ## ER 図
 
-![初級模擬](https://github.com/yuriF5/Atte/assets/152612024/8093455f-1840-4281-b051-ebebf9a6cac8)
+![初級模擬](https://github.com/yuriF5/Atte/assets/152612024/15efaedf-dfa1-477c-b39b-53bbded0cd36)
 
 
 ## Laravel 環境構築

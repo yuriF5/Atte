@@ -150,7 +150,7 @@ class Work_timeController extends Controller
     $now = Carbon::now();
 
     $restTime = 0;
-        if ($rest_finish_time && $rest_finish_time->startRestTime && !$rest_finish_time->endRestTime) {
+        if ($rest_finish_time && $rest_finish_time->startRestTime && !$rest_finish_time->finishRestTime) {
             $startRestTime = new Carbon($rest_finish_time->startRestTime);
             $finishRestTime = new Carbon($rest_finish_time->finishRestTime);
             $restTime = $startRestTime->diffInMinutes($finishRestTime);
@@ -161,7 +161,7 @@ class Work_timeController extends Controller
 
         if ($rest_finish_time) {
             if (empty($rest_finish_time->finish)) {
-                if ($rest_finish_time->startRestTime && !$rest_finish_time->endRestTime) {
+                if ($rest_finish_time->startRestTime && !$rest_finish_time->finishRestTime) {
                     return redirect()->back()->with('message', '休憩打刻が押されていません');
                 } else {
                     $rest_finish_time->update([
