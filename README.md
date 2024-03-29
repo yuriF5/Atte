@@ -47,7 +47,7 @@ git clone git@github.com:estra-inc/confirmation-test-contact-form.git
 
 ## テーブル設計
 - 社員
-- 勤怠時間
+- 勤務時間
 - 休憩時間
 
 ## ER 図
