@@ -19,7 +19,7 @@ class Work_time extends Model
     ];
 
     function findWorkTime($userId) {
-    return WorkTime::whereNull('finish')->where('user_id', $userId)->first();
+    return Work_Time::whereNull('finish')->where('user_id', $userId)->first();
 
     }
 

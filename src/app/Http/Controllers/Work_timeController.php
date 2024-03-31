@@ -59,9 +59,10 @@ class Work_timeController extends Controller
 
     $user = Auth::user();
     $user_id = $request->input('user_id');
-    $finish_time = $request->input('finish');
 
-    Work_time::where('user_id', $user_id)->update(['finish' => Carbon::now()]);
+    Work_time::where('user_id', $user->id)
+    ->whereNull('finish') // finish フィールドが null（つまり、まだ退勤していないレコード）のものだけを対象にする
+    ->update(['finish' => Carbon::now()]);
 
     $work_finish_time = Work_time::where('user_id', $user->id)->latest()->first();
 
@@ -69,7 +70,7 @@ class Work_timeController extends Controller
     $now = Carbon::now();
 
     $restTime = 0;
-        if ($work_finish_time && $work_finish_time->startRestTime && !$work_finish_time->endRestTime) {
+        if ($work_finish_time && $work_finish_time->startRestTime && $work_finish_time->endRestTime) {
             $startRestTime = new Carbon($work_finish_time->startRestTime);
             $finishRestTime = new Carbon($work_finish_time->finishRestTime);
             $restTime = $startRestTime->diffInMinutes($finishRestTime);
@@ -80,7 +81,7 @@ class Work_timeController extends Controller
 
         if ($work_finish_time) {
             if (empty($work_finish_time->finish)) {
-                if ($work_finish_time->startRestTime && !$work_finish_time->endRestTime) {
+                if ($work_finish_time->startRestTime && $work_finish_time->finishRestTime) {
                     return redirect()->back()->with('message', '休憩打刻が押されていません');
                 } else {
                     $work_finish_time->update([
@@ -105,35 +106,32 @@ class Work_timeController extends Controller
 
         public function startRest(Request $request)
     {
-        $user = Auth::user();
-        $work_time_id = $request->input('work_time_id');
-        $workTimes = Work_Time::whereNull('finish')->where('user_id', Auth()->user()->id)->get();
-        $oldStartTime = Rest_time::where('work_time_id',$work_time_id)->latest()->first();
-        $oldDay= '';
         
+        
+        $user = Auth::user();
+    $work_time_id = $request->work_time_id;
+    $workTime = Work_time::find($work_time_id);
+    $workTimes = Work_time::whereNull('finish')->where('user_id', Auth::user()->id)->get();
+    $oldStartTime = Rest_time::where('work_time_id', $work_time_id)->latest()->first();
+    $oldDay = '';
 
-        if($oldStartTime) {
-            $oldTimeStart = new Carbon($oldStartTime->start);
-            $oldDay = $oldTimeStart->startOfDay();
-        }
-        $today = Carbon::today();
+    if ($oldStartTime) {
+        $oldTimeStart = new Carbon($oldStartTime->start);
+        $oldDay = $oldTimeStart->startOfDay();
+    }
 
-        if(($oldDay == $today) && (empty($oldStartTime->finish))) {
-            return redirect()->back()->with('message','休憩開始打刻済みです');
-        }
+    $today = Carbon::today();
 
-        if($oldStartTime) {
-            $oldFinish = new Carbon($oldStartTime->finish);
-            $oldDay = $oldFinish->startOfDay();
-        }
-    
+    if ($oldDay == $today && empty($oldStartTime->finish)) {
+        return redirect()->back()->with('message', '休憩開始打刻済みです');
+    }
         // 休憩が開始されたことを示すメッセージをセッションに追加
         session()->flash('message', '休憩が開始されました。');
 
         Rest_time::create([
             'start' => Carbon::now(),
         ]);
-        return redirect('/');
+
     }
 
     public function finishRest(Request $request)
@@ -142,7 +140,9 @@ class Work_timeController extends Controller
     $work_time_id = $request->input('work_time_id');
     $finish_time = $request->input('finish');
 
-    Rest_time::where('work_time_id', $work_time_id)->update(['finish' => Carbon::now()]);
+    Rest_time::where('work_time_id', $work_time_id)
+    ->whereNull('finish') // finish フィールドが null（つまり、まだ終了していない休憩時間レコード）のものだけを対象にする
+    ->update(['finish' => Carbon::now()]);
 
     $rest_finish_time = Rest_time::where('work_time_id', $work_time_id)->latest()->first();
 
@@ -150,7 +150,7 @@ class Work_timeController extends Controller
     $now = Carbon::now();
 
     $restTime = 0;
-        if ($rest_finish_time && $rest_finish_time->startRestTime && !$rest_finish_time->finishRestTime) {
+        if ($rest_finish_time && $rest_finish_time->startRestTime && $rest_finish_time->finishRestTime) {
             $startRestTime = new Carbon($rest_finish_time->startRestTime);
             $finishRestTime = new Carbon($rest_finish_time->finishRestTime);
             $restTime = $startRestTime->diffInMinutes($finishRestTime);
@@ -161,7 +161,7 @@ class Work_timeController extends Controller
 
         if ($rest_finish_time) {
             if (empty($rest_finish_time->finish)) {
-                if ($rest_finish_time->startRestTime && !$rest_finish_time->finishRestTime) {
+                if ($rest_finish_time->startRestTime && $rest_finish_time->finishRestTime) {
                     return redirect()->back()->with('message', '休憩打刻が押されていません');
                 } else {
                     $rest_finish_time->update([
