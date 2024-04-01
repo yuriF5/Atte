@@ -34,7 +34,7 @@ class Work_timeController extends Controller
         $today = Carbon::today();
 
         if(($oldDay == $today) && (empty($oldStartTime->finish))) {
-            return redirect()->back()->with('message','出勤打刻済みです');
+            return redirect()->back()->with('message','本日分の勤務は既に終了してます');
         }
 
         if($oldStartTime) {
@@ -43,7 +43,7 @@ class Work_timeController extends Controller
         }
 
         if(($oldDay == $today)) {
-            return redirect()->back()->with('message','退勤打刻は完了しました');
+            return redirect()->back()->with('message','本日分の勤務は既に終了してます');
         }
 
         Work_time::create([
@@ -94,7 +94,7 @@ class Work_timeController extends Controller
                 $oldWorkFinish = new Carbon($work_finish_time->finish);
                 $oldWorkFinishDay = $oldWorkFinish->day;
                 if ($day == $oldWorkFinishDay) {
-                    return redirect()->back()->with('message', '退勤済みです');
+                    return redirect()->back()->with('message', '本日分の勤務は既に終了してます');
                 } else {
                     return redirect()->back()->with('message', '休憩打刻が押されていません');
                 }
@@ -106,8 +106,8 @@ class Work_timeController extends Controller
     public function startRest(Request $request)
     {
         $user = Auth::user();
-        $work_time_id = Work_time::find($request->id);
-        $workTimes = Work_time::whereNull('finish')->where('user_id', Auth::user()->id)->get();
+        $work_time_id = Work_time::find($request->work_time_id);
+        $workTimes = Work_time::whereNull('finish')->where('user_id', $user->id)->pluck('id');
         $oldStartTime = Rest_time::where('work_time_id', $work_time_id)->latest()->first();
         $oldDay = '';
 
@@ -115,6 +115,7 @@ class Work_timeController extends Controller
         if ($oldStartTime) {
             $oldTimeStart = new Carbon($oldStartTime->start);
             $oldDay = $oldTimeStart->startOfDay();
+            return redirect()->back()->with('message', '休憩開始打刻済み');
         }
         $today = Carbon::today();
 
@@ -123,10 +124,14 @@ class Work_timeController extends Controller
         }
         session()->flash('message', '休憩が開始されました。');
 
+        if (!$workTimes->isEmpty()) {
         Rest_time::create([
             'work_time_id' => $work_time_id,
             'start' => Carbon::now(),
         ]);
+        }
+
+        return redirect('/');
     }
 
     // 休憩終了
@@ -161,6 +166,8 @@ class Work_timeController extends Controller
                     ]);
                     return redirect()->back();
                 }
+                session()->flash('message', '休憩終了が正常に行われました');
+                return redirect()->back();
             } else {
                 $today = Carbon::now();
                 $day = $today->day;

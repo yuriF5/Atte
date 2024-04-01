@@ -12,10 +12,12 @@
 
 .alert{
     max-width: 800px;
-        color: maroon;
-        font-weight: bold;
-        text-align: center;
-        margin: 0 auto;
+    color: maroon;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 30px;
+
 }
 
 .attendance__content{
@@ -75,6 +77,7 @@
     align-items: center;
 
 }
+
 .attendance__button-stop{
     background: #575252;
     font-size: 20px;

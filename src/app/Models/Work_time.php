@@ -12,6 +12,7 @@ class Work_time extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'start',
         'finish',
         'total_time'

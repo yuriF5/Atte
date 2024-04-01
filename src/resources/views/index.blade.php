@@ -11,12 +11,13 @@
     <div class="main__inner">
         <div class="main__title">
             <p class="main__ttl">{{Auth::user()->name }}さんお疲れ様です</p>
-    @if (session('message'))
-    <div class="alert alert-success">
-        {{ session('message') }}
-    </div>
-@endif
+            @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+            @endif
         </div>
+        
         <div class="main__content">
             <div class="main__content__works">
                 <form class="attendance__content" id="startRestForm"action="{{ route('work_time/start') }}" method="POST">
@@ -34,15 +35,13 @@
                 <form class="attendance__content"action="{{ route('startRest') }}
                 " method="POST">
                         @csrf
-                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}
-                    ">
+                    <input hidden type="text" name="user_id" value="{{Auth::user()->id}}">
                     <button class="attendance__button-start" name="startRest" >休憩開始</button>
                 </form>
                 <form class="attendance__content"id="finishRestForm"action="{{ route('finishRest') }}
                 " method="POST">
                         @csrf
-                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}
-                    ">
+                    <input hidden type="text" name="user_id" value="{{Auth::user()->id}}">
                     <button class="attendance__button-stop" name="finishRest">休憩終了</button>
                 </form>
             </div>
