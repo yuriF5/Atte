@@ -7,7 +7,7 @@ use App\Http\Controllers\Work_timeController;
 use App\Http\Controllers\Rest_timeController;
 use App\Http\Controllers\MiddlewareController;
 
-
+// ログイン中で勤怠打刻
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', [RegisteredUserController::class, 'index']); 
     Route::post('/start', [Work_timeController::class,'create'])->name('work_time/start');
@@ -21,3 +21,7 @@ Route::group(['middleware' => 'auth'], function() {
 Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
+
+// 日別一覧previewボタン用
+Route::post('/attendance/date', [AttendanceController::class, 'perDate'])
+    ->name('per/date');

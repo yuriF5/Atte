@@ -65,6 +65,7 @@ class Work_timeController extends Controller
 
          // 勤務時間を設定する為の休憩時間デフォルト値
         $restTime = 0;
+
         if ($work_finish_time && $work_finish_time->startRestTime && $work_finish_time->finishRestTime) {
             $startRestTime = new Carbon($work_finish_time->startRestTime);
             $finishRestTime = new Carbon($work_finish_time->finishRestTime);
@@ -72,8 +73,9 @@ class Work_timeController extends Controller
         }
 
         // 勤務時間の計算
+        $totalRestTime = Rest_time::where('work_time_id', $work_time_id)->sum('total_time');
         $stayTime = $start_time->diffInMinutes($now);
-        $workingMinute = $stayTime - $restTime;
+        $workingMinute = $stayTime - $totalRestTime;
         $workingHour = ceil($workingMinute / 15) * 0.25;
 
         // 勤務終了した際のメッセージ設定
@@ -158,16 +160,18 @@ class Work_timeController extends Controller
         if ($rest_finish_time) {
             if (empty($rest_finish_time->finish)) {
                 if ($rest_finish_time->startRestTime && $rest_finish_time->finishRestTime) {
-                    return redirect()->back()->with('message', '休憩打刻が押されていません');
+                    $total_time = $workingMinute;
+                $rest_finish_time->update([
+                    'finish' => Carbon::now(),
+                    'total_time' => $total_time
+                ]);
+                return redirect()->back();
                 } else {
                     $rest_finish_time->update([
                         'finish' => Carbon::now(),
-                        'total_time' => $workingMinute
                     ]);
-                    return redirect()->back();
+                    return redirect()->back()->with('message', '休憩終了が正常に行われました');
                 }
-                session()->flash('message', '休憩終了が正常に行われました');
-                return redirect()->back();
             } else {
                 $today = Carbon::now();
                 $day = $today->day;

@@ -35,13 +35,13 @@
                 <form class="attendance__content"action="{{ route('startRest') }}
                 " method="POST">
                         @csrf
-                    <input hidden type="text" name="user_id" value="{{Auth::user()->id}}">
+                    <input hidden type="text" name="work_time_id" value="{{ $work_time_id }}">
                     <button class="attendance__button-start" name="startRest" >休憩開始</button>
                 </form>
                 <form class="attendance__content"id="finishRestForm"action="{{ route('finishRest') }}
                 " method="POST">
                         @csrf
-                    <input hidden type="text" name="user_id" value="{{Auth::user()->id}}">
+                    <input hidden type="text" name="work_time_id" value="{{ $work_time_id }}">
                     <button class="attendance__button-stop" name="finishRest">休憩終了</button>
                 </form>
             </div>

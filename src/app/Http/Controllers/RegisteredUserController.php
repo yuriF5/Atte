@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisteredUserController extends Controller
 {
-    public function index(){
-        return view('index');
-    }
+public function index()
+{
+    $work_time_id = 1; // ここに適切な work_time_id の値を設定する
+
+    return view('index', ['work_time_id' => $work_time_id]);
+}
 
     public function store(RegisterRequest $request)
     {
