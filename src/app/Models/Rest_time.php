@@ -20,7 +20,7 @@ class Rest_time extends Model
     ];
 
 
-    public function work_time()
+    public function work_times()
     {
         return $this->belongsTo(Work_time::class);
     }
