@@ -26,6 +26,12 @@
     <div class="register-form__heading">
         <h2>会員登録</h2>
     </div>
+    @if (session('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+    @endif
+    
     <form class="form" action="/register" method="post">
         @csrf
         <div class="form__group">

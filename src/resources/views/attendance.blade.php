@@ -7,11 +7,13 @@
 @section('content')
 <div class="main">
     <div class="center">
-        <div class="date">
-            <button onclick="changeDate('prev')">&lt;</button> 
-            {{ date('Y-m-d') }}
-            <button onclick="changeDate('next')">&gt;</button>
-        </div>  
+        <<form class="header__wrap" action="{{ route('per/date') }}" method="post">
+        @csrf
+        <button class="date__change-button" name="prevDate"><</button>
+        <input type="hidden" name="displayDate" value="{{ $displayDate }}">
+        <p class="header__text">{{ $displayDate->format('Y-m-d') }}</p>
+        <button class="date__change-button" name="nextDate">></button>
+        </form>
     </div>
 
     <div class="attendance-table">
@@ -23,17 +25,17 @@
                 <th class="attendance-table__header">休憩時間</th>
                 <th class="attendance-table__header">勤務時間</th>
             </tr>
-            @foreach($work_times?? [] as $work_time)
+            @foreach ($users as $user)
             <tr class="attendance-table__row">
-                <td class="attendance-table__item">{{ $workTime->user->name }}</td>
-                <td class="attendance-table__item">{{ $workTime->start }}</td>
-                <td class="attendance-table__item">{{ $workTime->finish }}</td>
-                <td class="attendance-table__item">{{ $workTime->rest_times_sum_total_time }}</td>
-                <td class="attendance-table__item">{{ $workTime->total }}</td>
+                <td class="attendance-table__item">{{ $user->name }}</td>
+                <td class="attendance-table__item">{{ $user->start }}</td>
+                <td class="attendance-table__item">{{ $user->finish }}</td>
+                <td class="attendance-table__item">{{ $user->total_rest }}</td>
+                <td class="attendance-table__item">{{$user->total_work }}</td>
             </tr>
             @endforeach
         </table>
-        {{ $workTimes->links() }}
+        {{ $users->links('vendor/pagination/paginate') }}
     </div>
 
 </div>
