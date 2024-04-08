@@ -2,25 +2,24 @@
 
 概要：ログイン機能と勤怠打刻機能
 
+![初級案件アプリ画面](https://github.com/yuriF5/Atte/assets/152612024/610da898-907b-4aa1-9fbb-3e7aecfa869b)
 
 ## 作成した目的
 
 ある企業の勤怠管理システムであり、人事評価の為作成してます
-
 
 ## 当アプリケーションの URL と開発環境
 
 - https://github.com/yuriF5/Atte
 
   ※PC：Chrome/Firefox/Safari 最新バージョンを使用対象の為不足していると意図した画面が表示されない可能性があります
+
 - 開発環境：http://localhost/
 - phpMyAdmin:http://localhost:8080/
-
 
 ## 環境構築の為使用したリポジトリ
 
 git clone git@github.com:estra-inc/confirmation-test-contact-form.git
-
 
 ## 機能一覧
 
@@ -36,7 +35,6 @@ git clone git@github.com:estra-inc/confirmation-test-contact-form.git
 
 勤怠打刻画面の日時一覧より、名前、勤怠、休憩時間の実績一覧画面を表示する
 
-
 ## 使用技術（実行環境）
 
 - PHP 8.1
@@ -44,14 +42,13 @@ git clone git@github.com:estra-inc/confirmation-test-contact-form.git
 - MySQL 10.6
 - OS windows 11
 
-
 ## テーブル設計
+
 ![初級案件テーブル](https://github.com/yuriF5/Atte/assets/152612024/3368df99-6550-461d-aa15-81e763577f30)
 
 ## ER 図
 
 ![初級模擬](https://github.com/yuriF5/Atte/assets/152612024/15efaedf-dfa1-477c-b39b-53bbded0cd36)
-
 
 ## Laravel 環境構築
 
@@ -74,7 +71,6 @@ DB_USERNAME=laravel_user
 
 DB_PASSWORD=laravel_pass
 
-
 アプリケーションキーの作成
 
 php artisan key:generate
@@ -87,6 +83,6 @@ php artisan migrate
 
 php artisan migrate
 
-日時を保存する為carbonをインストール
+日時を保存する為 carbon をインストール
 
 composer require nesbot/carbon
