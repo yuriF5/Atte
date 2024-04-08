@@ -8,7 +8,7 @@ use App\Http\Controllers\Rest_timeController;
 use App\Http\Controllers\MiddlewareController;
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('/', [RegisteredUserController::class, 'index']); 
+    Route::get('/', [Work_timeController::class, 'index']); 
     Route::post('/start', [Work_timeController::class,'create'])->name('work_time/start');
     Route::post('/finish', [Work_timeController::class,'store'])->name('work_time/finish');
     Route::post('/startRest', [Work_timeController::class,'startRest'])->name('startRest');

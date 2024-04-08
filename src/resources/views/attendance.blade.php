@@ -26,10 +26,14 @@
                 <th class="attendance-table__header">勤務時間</th>
             </tr>
             @foreach ($users as $user)
+            @php
+            $workTime = $user->work_times->first();
+            $restTime = $user->rest_times->first();
+            @endphp
             <tr class="attendance-table__row">
                 <td class="attendance-table__item">{{ $user->name }}</td>
-                <td class="attendance-table__item">{{ $user->start }}</td>
-                <td class="attendance-table__item">{{ $user->finish }}</td>
+                <td class="attendance-table__item">{{ $user->work_time->start }}</td>
+                <td class="attendance-table__item">{{ $user->work_time->finish }}</td>
                 <td class="attendance-table__item">{{ $user->total_rest }}</td>
                 <td class="attendance-table__item">{{$user->total_work }}</td>
             </tr>
@@ -37,7 +41,6 @@
         </table>
         {{ $users->links('vendor/pagination/paginate') }}
     </div>
-
 </div>
 
 <footer class="footer">
