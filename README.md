@@ -46,9 +46,7 @@ git clone git@github.com:estra-inc/confirmation-test-contact-form.git
 
 
 ## テーブル設計
-- 社員
-- 勤務時間
-- 休憩時間
+![初級案件テーブル](https://github.com/yuriF5/Atte/assets/152612024/3368df99-6550-461d-aa15-81e763577f30)
 
 ## ER 図
 
