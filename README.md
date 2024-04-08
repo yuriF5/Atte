@@ -83,6 +83,12 @@ php artisan migrate
 
 php artisan migrate
 
-日時を保存する為 carbon をインストール
+Fortifyのログイン認証の作成
+
+composer require laravel/fortify
+
+php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"
+
+日時をDBへ保存する為 carbon を作成
 
 composer require nesbot/carbon

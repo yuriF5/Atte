@@ -15,7 +15,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/finishRest', [Work_timeController::class,'finishRest'])->name('finishRest');
     Route::get('/attendance', [Work_timeController::class, 'attendance']);
 });
-Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
 Route::post('/attendance/date', [Work_timeController::class, 'perDate'])
