@@ -18,6 +18,7 @@
 
     <div class="attendance-table">
         <table class="attendance-table__inner">
+            @foreach ($attendanceData as $key => $data)
             <tr class="attendance-table__row">
                 <th class="attendance-table__header">名前</th>
                 <th class="attendance-table__header">勤務開始</th>
@@ -25,17 +26,13 @@
                 <th class="attendance-table__header">休憩時間</th>
                 <th class="attendance-table__header">勤務時間</th>
             </tr>
-            @foreach ($users as $user)
-            @php
-            $workTime = $user->work_times->first();
-            $restTime = $user->rest_times->first();
-            @endphp
+            @foreach ($work_times as $work_time)
             <tr class="attendance-table__row">
-                <td class="attendance-table__item">{{ $user->name }}</td>
-                <td class="attendance-table__item">{{ $user->work_time->start }}</td>
-                <td class="attendance-table__item">{{ $user->work_time->finish }}</td>
-                <td class="attendance-table__item">{{ $user->total_rest }}</td>
-                <td class="attendance-table__item">{{$user->total_work }}</td>
+                <td class="attendance-table__item">{{ $users[$key]->name }}</td>
+                <td class="attendance-table__item">{{ $workTimes[$key]->start }}</td>
+                <td class="attendance-table__item">{{ $workTimes[$key]->finish }}</td>
+                <td class="attendance-table__item">{{ $restTimes[$key]->total_time }}</td>
+                <td class="attendance-table__item">{{ $workTimes[$key]->total_time }}</td>
             </tr>
             @endforeach
         </table>

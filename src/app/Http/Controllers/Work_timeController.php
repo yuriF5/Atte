@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Work_time;
 use App\Models\Rest_time;
+use App\Models\User;
 use App\Http\Requests\WorkRequest;
 use Carbon\Carbon;
 use Auth;
@@ -14,7 +15,6 @@ class Work_timeController extends Controller
     
     public function index(Request $request)
     {
-        // ログインしているユーザーを取得する
         $user = Auth::user();
         
         // 勤務中のIDを取得する
@@ -22,27 +22,38 @@ class Work_timeController extends Controller
         ->where('user_id', $user->id)
         ->pluck('id')
         ->first();
-        
-        // ビューにデータを渡して表示する
+
         return view('index', ['work_time_id' => $work_time_id]);
     }
+
     // 日付一覧表
-    public function attendance()
+        public function attendance()
     {
-       // 1. 今日の日付を取得
-    $displayDate = now();
+        // ページネーション
+        $users = User::select('name')->paginate(5); 
+        $workTimes = Work_Time::select('start', 'finish', 'total_time')->paginate(5); 
+        $restTimes = Rest_time::select('total_time')->paginate(5);
 
-    // 2. ログインユーザーの情報を取得
-    $user = Auth::user();
+        // 一覧
+        $attendanceData = [];
+        foreach ($users as $key => $user) {
+            $attendanceData[] = [
+                'name' => $user->name,
+                'start' => $workTimes[$key]->start,
+                'finish' => $workTimes[$key]->finish,
+                'total_time' => $workTimes[$key]->total_time,
+                'total_time' => $restTimes[$key]->total_time,
+            ];
+        }
+        return view('attendance', compact('attendanceData', 'users'));
+    }
 
-    // 3. ログインユーザーの勤務データを取得し、ページネーションを適用
-    $workTimes = Work_time::with('user')
-        ->where('user_id', $user->id)
-        ->select('user_id', 'start', 'finish')
-        ->withSum('rest_time', 'total_time')
-        ->paginate(5);
+    // 日付一覧prev
+    public function perDate(Request $request)
+    {
+        $displayDate = now();
 
-    return view('attendance', compact('workTimes', 'displayDate', 'user'));
+        return view('attendance', compact('displayDate'));
     }
 
     // 勤務開始
@@ -60,8 +71,8 @@ class Work_timeController extends Controller
         }
         $today = Carbon::today();
 
-    // 既に勤務開始している場合の処理
-    if ($oldStartTime && empty($oldStartTime->finish)) {
+        // 既に勤務開始している場合の処理
+        if ($oldStartTime && empty($oldStartTime->finish)) {
         return redirect()->back()->with('message', '既に勤務を開始しています。勤務終了ボタンを押してから新規の勤務を開始して下さい。');
     }
 
@@ -109,6 +120,11 @@ class Work_timeController extends Controller
         $workingMinute = max(0, $workingMinute);
 
         $workingHour = ceil($workingMinute / 15) * 0.25;
+        
+        // 合計時間が0であれば、0を追加
+        if ($workingMinute == 0) {
+            $workingMinute = 0;
+        }
 
         // 勤務終了した際のメッセージ設定
         if ($work_finish_time) {
